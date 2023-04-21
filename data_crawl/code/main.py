@@ -1,6 +1,5 @@
 import requests
 import json
-import sys
 import  csv
 from fastapi import FastAPI
 app= FastAPI()
@@ -19,6 +18,7 @@ class DISH:
 
 @app.get("/crawl_dishes")
 async def crawl_dishes():
+    
     # cào id quán
     url = "https://gappapi.deliverynow.vn/api/delivery/get_browsing_ids"
 
@@ -50,11 +50,14 @@ async def crawl_dishes():
     # print(response.text)
     delivery_ids = response.json()['reply']['delivery_ids']
     # Lấy 5 delivery đầu tiên
-    first_five_deliveries = delivery_ids[:5]
+    first_five_deliveries = delivery_ids[7:10]
     print(first_five_deliveries)
     # Lấy  menu quán 
     dish_types = []
     dishess= []
+    # xóa dữ liệu cũ trong  file csv
+    with open ('dishes.csv',mode ='w', encoding='utf-8', newline ='') as file:
+        writer = csv.writer(file)
     for delivery_id in first_five_deliveries:
         url = "https://gappapi.deliverynow.vn/api/dish/get_delivery_dishes?id_type=2&request_id=133203"
 
@@ -80,9 +83,7 @@ async def crawl_dishes():
         'Sec-Fetch-Dest': 'empty'
         }
         response = requests.request("GET", url, headers=headers, data=payload)
-        # xóa dữ liệu cũ trong  file csv
-        with open ('dishes.csv',mode ='w', encoding='utf-8', newline ='') as file:
-            writer = csv.writer(file)
+        
         # Truy cập vào menu_infos
         menu_infos = response.json()['reply']['menu_infos']
         for menu_info in  menu_infos:
@@ -102,6 +103,35 @@ async def crawl_dishes():
                 dishess.append(dish)
             # print(dish_type)
     return {"message": "Data crawled and saved successfully", "data": dishess}
+
+
+# @app.post("/add_data")
+# async def add_data:
+#     # Kết nối đến cơ sở dữ liệu
+#     mydb = mysql.connector.connect(user='root', password='psw123', port='6603',
+#     host='127.0.0.1',
+#     database='foody_db')
+
+#     # Tạo một con trỏ để thao tác với database
+#     mycursor = mydb.cursor()
+
+#     # Đọc file CSV
+
+#     with open('../data_crawl/code/dishes.csv', 'r', encoding='utf-8') as csvfile:
+#         csvreader = csv.reader(csvfile)
+#         next(csvreader) # bỏ qua dòng tiêu đề
+#         for row in csvreader:
+#             # xử lý dữ liệu trong mỗi row
+#             # ví dụ, lưu dữ liệu vào database
+#             sql = "INSERT INTO Dishes (dish_id, dish_name, price,d_description,dish_type_name,delivery_id) VALUES (%s, %s, %s, %s, %s, %s)"
+#             val = (row[0], row[1], row[2],row[3],row[4],row[5])
+#             mycursor.execute(sql, val)
+
+#     mydb.commit()
+
+#     # Đóng kết nối đến cơ sở dữ liệu
+#     mycursor.close()
+#     mydb.close()
 
 
 
