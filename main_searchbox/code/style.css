@@ -1,0 +1,15 @@
+body {
+    box-sizing: border-box;
+    margin: 0px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: bisque;
+}
+.sb *{
+    width: 300px;
+    height: 100px;
+    
+}

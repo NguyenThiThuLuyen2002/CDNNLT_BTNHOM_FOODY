@@ -6,24 +6,20 @@ services:
     build: ./mysql #dduwong dan cua file dockerfile
     ports:
       - "6603:3306"
-  # data_crawl:
-  #   container_name: foody_crawl_data
-  #   build: ./data_crawl
-  #   ports:
-  #     - "8001:9001"
-  #   depends_on: 
-  #     - mysql_service
-  # mysql_api:
-  #   container_name: foody_mysql_api
-  #   build: ./mysql_api
-  #   ports:
-  #     - "8002:9002"
-  #   depends_on: 
-  #     - mysql_service
-  # mysql_api:
-  #   container_name: foody_search_webpage
-  #   build: ./search_webpage
-  #   ports:
-  #     - "8003:9003"
-  #   depends_on: 
-  #     - mysql_service
+  data_crawl:
+    container_name: foody_crawl_data
+    build: ./data_crawl
+    ports:
+      - "8001:9001"
+    depends_on: 
+      - mysql_service
+  mysql_api:
+    container_name: foody_mysql_api
+    build: ./mysql_api
+    ports:
+      - "8002:9002"
+    depends_on: 
+      - mysql_service
+  # main_searchbox:
+  #   container_name: foody_main_searchbox
+  #   build: ./main_searchbox
