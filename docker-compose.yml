@@ -18,7 +18,6 @@ services:
       - "8002:9002"
     depends_on: 
       - mysql_service
-      - crawl_data
 
   # main_searchbox:
   #   container_name: foody_main_searchbox

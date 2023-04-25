@@ -33,6 +33,7 @@ async def insert_file():
     # Đóng kết nối đến cơ sở dữ liệu
     mycursor.close()
     conn.close()
+    return {"message": "Data crawled and saved successfully"}
 
 @app.post("/add_dish/")
 def add_dish(id: str, name: str, price: str, description: str, dish_type_name: str, delivery_id: str):
