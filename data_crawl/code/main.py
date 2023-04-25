@@ -50,7 +50,7 @@ async def crawl_dishes():
     # print(response.text)
     delivery_ids = response.json()['reply']['delivery_ids']
     # Lấy 5 delivery đầu tiên
-    first_five_deliveries = delivery_ids[7:10]
+    first_five_deliveries = delivery_ids[:5]
     print(first_five_deliveries)
     # Lấy  menu quán 
     dish_types = []
