@@ -109,7 +109,7 @@ def lookup_dish(dishname: str):
     sql = "SELECTE * FROM Dishes WHERE dish_name LIKE '%" + dishname + "%'"
     mycursor = conn.cursor()
     mycursor.execute(sql, dishname)
-     # Lấy kết quả truy vấn dưới dạng dictionary
+     # lấy tất cả các bản ghi được trả về
     result = mycursor.fetchall()
     # Đóng kết nối cơ sở dữ liệu
     mycursor.close()

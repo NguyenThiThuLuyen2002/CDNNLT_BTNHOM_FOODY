@@ -7,18 +7,18 @@ services:
     ports:
       - "6603:3306"
   data_crawl:
-    container_name: foody_crawl_data
+    container_name: crawl_data
     build: ./data_crawl
     ports:
       - "8001:9001"
   mysql_api:
-    container_name: foody_mysql_api
+    container_name: mysql_api
     build: ./mysql_api
     ports:
       - "8002:9002"
     depends_on: 
       - mysql_service
-      - foody_crawl_data
+      - crawl_data
 
   # main_searchbox:
   #   container_name: foody_main_searchbox
